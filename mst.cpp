@@ -22,7 +22,7 @@ float get_dist(float c1[], float c2[], int dim) {
 }
 
 // Function to find min weight with Prim's
-float primMST(int n) {
+float primMST(int n, int dim) {
 
     float min_dist = 0;
     std::vector<Node> nodes(n);  // Initialize our nodes, maybe use vectors?
@@ -32,33 +32,23 @@ float primMST(int n) {
     for (int i = 0; i < n; i++) {
         nodes[i].value = __FLT_MAX__;
         nodes[i].visited = false;
+        nodes[i].ID = i;
     }
 
     // Starting node
     nodes[0].value = 0;
     H.insert(nodes[0]);
 
-    // each node: ID (index in array?), type: dim, value: actual value
-    // coords: coords if dim 2, 3, 4, visited: bool
-    // array of n Nodes
-    // initialize all as unvisited
-    // start from the 0th node, mark value as 0
-    // insert into minheap
-    // while loop: take out min of minheap, set it as visited
-    // go through all over n-1 nodes in array, pass by if visited
-    // for each node, distance is random edge or distance between randomly generated coords
-    // if the value of each node is less than the distance, set the value of each node as that distance
-    // put the nodes in the minheap based on value
-    // add mindistance to total mindistance
-    // recur by extracting the min node in the heap and starting again
+    // Prim's!
     while (H.size()) {
         Node v = H.getMin();
-        if (v.visited) continue; // skip visited nodes
-        v.visited = true;
+        if (nodes[v.ID].visited) continue; // skip visited nodes
+        nodes[v.ID].visited = true;
         min_dist += v.value;
-        std::cout << min_dist << " " << v.value << std::endl;
         for (int i = 0; i < n; i++) {
-            if (nodes[i].visited) continue;
+            if (nodes[i].visited) {
+                continue;
+            }
             float currdist = random_float();
             if (nodes[i].value > currdist) {
                 nodes[i].value = currdist;
@@ -86,8 +76,12 @@ int main(int argc, char *argv[]) {
     int trials = atoi(argv[3]); // Num of trials
     int dim = atoi(argv[4]); // Num of dimensions (0, 2, 3, 4)
 
-    float sum = primMST(n);
-    std::cout << sum << " " << n << std::endl;
+    float sum = 0;
+    for (int i = 0; i < trials; i++) {
+        sum += primMST(n, dim);
+    }
+
+    std::cout << sum / trials << " " << n << std::endl;
     
     return 0;
 
