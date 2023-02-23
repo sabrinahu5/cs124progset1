@@ -8,6 +8,7 @@ using namespace std;
 struct Node {
   int ID;
   int type;
+  bool visited;
   float value;
   float coords[4];
 };
@@ -74,7 +75,7 @@ class MinHeap {
 
         Node getMin() {
             if (heap.empty()) {
-                return {0, 0, 0, {0,0,0,0}};
+                return {0, 0, false, 0, {0,0,0,0}};
             }
 
             Node minNode = heap[0];
