@@ -8,8 +8,8 @@ using namespace std;
 struct Node {
   int ID;
   int type;
-  double value;
-  double coords[4];
+  float value;
+  float coords[4];
 };
 
 // Construct MinHeap class

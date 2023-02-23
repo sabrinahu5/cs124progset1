@@ -1,21 +1,30 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
+#include <vector>
 #include <time.h>
+#include <math.h>
+#include "binary_heap.hpp"
+
+using namespace std;
 
 // Produces random edge
-double random_double() {
-    return ((double)rand() / (double) RAND_MAX);
+float random_float() {
+    return ((float)rand() / (float) RAND_MAX);
 }
 
 // Gets distance between two points (for dim 2, 3, 4)
-double get_dist(int u, int v) {
-
+float get_dist(float c1[], float c2[], int dim) {
+    float dist = 0;
+    // Distance formula based on dimension
+    for (int i = 0; i < dim; i++) {
+        dist += (c1[i] - c2[i]) * (c1[i] - c2[i]);
+    }
+    return sqrt(dist);
 }
 
 
 int main(int argc, char** argv) {
+
     
     return 0;
-
 
 }
