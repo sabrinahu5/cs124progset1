@@ -21,6 +21,18 @@ float get_dist(float c1[], float c2[], int dim) {
     return sqrt(dist);
 }
 
+// Function to find min weight with Prim's
+float primMST(int n) {
+
+    float min_dist = 0;
+    Node nodes[n];
+    float dist[n];
+    bool visited[n];
+    MinHeap minheap;
+
+
+}
+
 
 int main(int argc, char** argv) {
 
