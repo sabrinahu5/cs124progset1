@@ -33,6 +33,11 @@ float primMST(int n, int dim) {
         nodes[i].value = __FLT_MAX__;
         nodes[i].visited = false;
         nodes[i].ID = i;
+        if (dim > 0) {
+            for (int j = 0; j < dim; j++) {
+                nodes[i].coords[j] = random_float();
+            }
+        }
     }
 
     // Starting node
@@ -49,7 +54,12 @@ float primMST(int n, int dim) {
             if (nodes[i].visited) {
                 continue;
             }
-            float currdist = random_float();
+            float currdist;
+            if (dim == 0) {
+                currdist = random_float();
+            } else {
+                currdist = get_dist(nodes[i].coords, nodes[v.ID].coords, dim);
+            }
             if (nodes[i].value > currdist) {
                 nodes[i].value = currdist;
                 H.insert(nodes[i]); // add new node to heap
