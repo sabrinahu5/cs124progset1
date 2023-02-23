@@ -3,6 +3,7 @@
 #include <time.h>
 #include <math.h>
 #include "binary_heap.hpp"
+#include <chrono>
 
 using namespace std;
 
@@ -74,6 +75,8 @@ float primMST(int n, int dim) {
 
 int main(int argc, char *argv[]) {
 
+    auto start_time = std::chrono::high_resolution_clock::now();
+
     srand(time(NULL));
 
     // command line argument should be in form "./randmst 0 numpoints numtrials dimension"
@@ -91,8 +94,12 @@ int main(int argc, char *argv[]) {
         sum += primMST(n, dim);
     }
 
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
+
     std::cout << sum / trials << " " << n << std::endl;
-    
+    std::cout << "Elapsed time: " << duration.count() << " milliseconds\n";
+
     return 0;
 
 }
