@@ -9,6 +9,14 @@
 // figure out most efficient MST algorithm
 // implement it lol
 
+// produces random double within a range
+double random_double(double min, double max) {
+    double range = max - min;
+    double div = RAND_MAX / range;
+    return min + (rand() / div);
+}
+
+
 // function to generate random numbers on [0,1], where n is the number of vertices
 int findMST1(int n) {
 
@@ -18,38 +26,23 @@ int findMST1(int n) {
     double graph[n][n];
 
     for (int i = 0; i < n; i++) {
-        for (int j = i+1, j < n; j++) {
-            double weight = (double) rand() / RAND_MAX;
-            graph[i][j] = weight
-            graph[j][i] = weight
+        for (int j = 0; j < n; j++) {
+            if (i == j) {
+                graph[i][j] = 0.0;
+            } else {
+                double weight = random_double(0.0, 1.0);
+                graph[i][j] = weight;
+                graph[j][i] = weight; 
+            }
         }
     }
+
+    return 0;
 
 
 }
 
 int main(int argc, char** argv) {
-    srand(time(NULL)); // Initialize the random number generator with the current time
-    
-    int n = 5; // Number of vertices
-    double graph[n][n]; // Matrix to represent the graph
-    
-    // Initialize the graph with random weights
-    for (int i = 0; i < n; i++) {
-        for (int j = i + 1; j < n; j++) {
-            double weight = ((double) rand() / RAND_MAX); // Generate a random weight between 0 and 1
-            graph[i][j] = weight;
-            graph[j][i] = weight; // Symmetric weights
-        }
-    }
-    
-    // Print the graph to verify
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            printf("%f ", graph[i][j]);
-        }
-        printf("\n");
-    }
     
     return 0;
 
