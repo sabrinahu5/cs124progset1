@@ -8,7 +8,7 @@ using namespace std;
 
 // Produces random edge
 float random_float() {
-    return ((float)rand() / (float) RAND_MAX);
+    return (float)rand() / RAND_MAX;
 }
 
 // Gets distance between two points (for dim 2, 3, 4)
@@ -25,9 +25,7 @@ float get_dist(float c1[], float c2[], int dim) {
 float primMST(int n) {
 
     float min_dist = 0;
-    Node nodes[n];  // Initialize our nodes
-    float dist[n];
-    bool visited[n]; // Visited nodes
+    std::vector<Node> nodes(n);  // Initialize our nodes, maybe use vectors?
     MinHeap H;
 
     // Initialize stuff:
@@ -55,15 +53,16 @@ float primMST(int n) {
     // recur by extracting the min node in the heap and starting again
     while (H.size()) {
         Node v = H.getMin();
+        if (v.visited) continue; // skip visited nodes
         v.visited = true;
         min_dist += v.value;
+        std::cout << min_dist << " " << v.value << std::endl;
         for (int i = 0; i < n; i++) {
-            if (nodes[i].visited == false) {
-                float currdist = random_float();
-                if (nodes[i].value > currdist) {
-                    nodes[i].value = currdist;
-                    H.insert(nodes[i]);
-                }
+            if (nodes[i].visited) continue;
+            float currdist = random_float();
+            if (nodes[i].value > currdist) {
+                nodes[i].value = currdist;
+                H.insert(nodes[i]); // add new node to heap
             }
         }
     }
@@ -76,6 +75,19 @@ float primMST(int n) {
 int main(int argc, char *argv[]) {
 
     srand(time(NULL));
+
+    // command line argument should be in form "./randmst 0 numpoints numtrials dimension"
+    if (argc != 5) {
+        printf("Invalid arguments.");
+        return 1;
+    }
+
+    int n = atoi(argv[2]); // Num of vertices in the graph
+    int trials = atoi(argv[3]); // Num of trials
+    int dim = atoi(argv[4]); // Num of dimensions (0, 2, 3, 4)
+
+    float sum = primMST(n);
+    std::cout << sum << " " << n << std::endl;
     
     return 0;
 
