@@ -15,11 +15,6 @@ MinHeap *createMinHeap(int capacity) {
     return heap;
 }
 
-void destroyMinHeap(MinHeap *heap) {
-    free(heap->data);
-    free(heap);
-}
-
 int parent(int i) {
     return (i - 1) / 2;
 }
@@ -88,4 +83,9 @@ void insert(MinHeap *heap, int key) {
         swap(&heap->data[i], &heap->data[parent(i)]);
         i = parent(i);
     }
+}
+
+void destroyMinHeap(MinHeap *heap) {
+    free(heap->data);
+    free(heap);
 }
