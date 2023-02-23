@@ -2,24 +2,18 @@
 #include <stdlib.h>
 #include <time.h>
 
-// will have three diff functions, which will be called at different times depending on command line argument
-// setup the graph for the problem (complete graph on n vertices, 
-// where the weight of each edge is a real number chosen uniformly at random on [0,1])
-
-// figure out most efficient MST algorithm
-// implement it lol
-
 // produces random double within a range
 double random_double(double min, double max) {
-    double range = max - min;
-    double div = RAND_MAX / range;
-    return min + (rand() / div);
+    ((double)rand() / (double)RAND_MAX) * (max - min) + min;
 }
-
 
 // function to generate random numbers on [0,1], where n is the number of vertices
 int findMST1(int n) {
 
+    // made node structure to store ID (0 to n), type, and coordinates (array of length 4, initialize as much as needed)
+    // different types of nodes
+    // visited or not (true or false)
+    // choose random number for each edge
     // initialize graph
     srand(time(NULL));
 
@@ -37,8 +31,9 @@ int findMST1(int n) {
         }
     }
 
-    return 0;
+    
 
+    return 0;
 
 }
 
