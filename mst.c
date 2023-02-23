@@ -25,12 +25,13 @@ int findMST1(int n) {
 
 
 
-    // made node structure to store ID (0 to n), type, and coordinates (array of length 4, initialize as much as needed)
+    // made node structure to store ID (0 to n), type, and coordinates (array of length 4, initialize as much as needed), value
     // different types of nodes
     // visited or not (true or false)
     // choose random number for each edge
     // estimate bigger n 
     // initialize graph
+
     srand(time(NULL));
 
     double graph[n][n];
