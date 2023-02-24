@@ -2,6 +2,7 @@
 #include <vector>
 #include <time.h>
 #include <math.h>
+#include <cmath>
 #include "binary_heap.hpp"
 #include <chrono>
 
@@ -26,10 +27,11 @@ float get_dist(float c1[], float c2[], int dim) {
 float primMST(int n, int dim) {
 
     float min_dist = 0;
-    std::vector<Node> nodes(n);  // Initialize our nodes, maybe use vectors?
+    std::vector<Node> nodes(n);  // Initialize our nodes
     MinHeap H;
+    float upper_lim = 0.5 * exp(-0.00001 * n); // k(n) for pruning
 
-    // Initialize stuff:
+    // Initialize stuff
     for (int i = 0; i < n; i++) {
         nodes[i].value = __FLT_MAX__;
         nodes[i].visited = false;
@@ -61,9 +63,11 @@ float primMST(int n, int dim) {
             } else {
                 currdist = get_dist(nodes[i].coords, nodes[v.ID].coords, dim);
             }
-            if (nodes[i].value > currdist) {
-                nodes[i].value = currdist;
-                H.insert(nodes[i]); // add new node to heap
+            if (currdist < upper_lim) { // pruning           
+                if (nodes[i].value > currdist) {
+                    nodes[i].value = currdist;
+                    H.insert(nodes[i]); // add new node to heap
+                }
             }
         }
     }
