@@ -1,19 +1,8 @@
-CC = g++
-CFLAGS = -std=c++11 -Wall -Wextra
+randmst: mst.o
+	g++ -std=c++0x -Wall mst.o -o randmst
 
-SRC = mst.cpp
-HDR = binary_heap.hpp
-OBJ = $(SRC:.cpp=.o)
-
-TARGET = mst
-
-all: $(TARGET)
-
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
-
-%.o: %.cpp $(HDR)
-	$(CC) $(CFLAGS) -c $< -o $@
+mst.o: mst.cpp
+	g++ -c mst.cpp
 
 clean:
-	rm -f $(TARGET) $(OBJ)
+	rm *.o randmst

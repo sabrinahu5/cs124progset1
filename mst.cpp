@@ -29,7 +29,6 @@ float primMST(int n, int dim) {
     float min_dist = 0;
     std::vector<Node> nodes(n);  // Initialize our nodes
     MinHeap H;
-    float upper_lim = 0.5 * exp(-0.00001 * n); // k(n) for pruning
 
     // Initialize stuff
     for (int i = 0; i < n; i++) {
@@ -47,27 +46,25 @@ float primMST(int n, int dim) {
     nodes[0].value = 0;
     H.insert(nodes[0]);
 
-    // Prim's!
+    // Prim's Algorithm
     while (H.size()) {
         Node v = H.getMin();
         if (nodes[v.ID].visited) continue; // skip visited nodes
-        nodes[v.ID].visited = true;
-        min_dist += v.value;
+        nodes[v.ID].visited = true; // mark node as visited
+        min_dist += v.value; // update min dist
         for (int i = 0; i < n; i++) {
             if (nodes[i].visited) {
                 continue;
             }
             float currdist;
             if (dim == 0) {
-                currdist = random_float();
+                currdist = random_float(); // "generate" a random edge
             } else {
                 currdist = get_dist(nodes[i].coords, nodes[v.ID].coords, dim);
-            }
-            if (currdist < upper_lim) { // pruning           
-                if (nodes[i].value > currdist) {
-                    nodes[i].value = currdist;
-                    H.insert(nodes[i]); // add new node to heap
-                }
+            }         
+            if (nodes[i].value > currdist) {
+                nodes[i].value = currdist;
+                H.insert(nodes[i]); // add new node to heap
             }
         }
     }
